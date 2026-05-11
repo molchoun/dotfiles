@@ -32,7 +32,8 @@ case "$profile" in
     install_command_links
     log 'initializing submodules'
     "$repo_root/init"
-    log 'no install-mac command yet, skipping package install'
+    log 'installing mac packages'
+    "$repo_root/install-mac"
     log 'syncing mac configs'
     "$repo_root/arsync" mac
     ;;

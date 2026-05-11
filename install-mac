@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+log() {
+  printf '[install-mac] %s\n' "$1"
+}
+
+if ! command -v brew >/dev/null 2>&1; then
+  printf 'Homebrew is required for install-mac\n' >&2
+  exit 1
+fi
+
+packages=(
+  git
+  stow
+  tmux
+  neovim
+  fzf
+  fd
+  ripgrep
+  jq
+)
+
+casks=(
+  kitty
+  sublime-text
+)
+
+log "installing Homebrew packages"
+log "packages: ${packages[*]}"
+brew install "${packages[@]}"
+
+log "installing Homebrew casks"
+log "casks: ${casks[*]}"
+brew install --cask "${casks[@]}"
+
+log 'package install complete'

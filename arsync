@@ -43,13 +43,14 @@ if ! command -v stow >/dev/null 2>&1; then
   exit 1
 fi
 
-packages=(zsh tmux scripts ranger)
+packages=(zsh tmux scripts)
 
 case "$profile" in
   arch)
-    packages+=(i3 hypr waybar rofi sublime-text)
+    packages+=(ranger i3 hypr waybar rofi sublime-text)
     ;;
   mac)
+    packages+=(sublime-text)
     ;;
   *)
     printf 'usage: %s [arch|mac]\n' "$0" >&2

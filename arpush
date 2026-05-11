@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-main_message="${1:-sync dotfiles updates}"
+main_message="${1:-automated: sync dotfiles}"
 nvim_message="$main_message"
 script_path="$(readlink -f "${BASH_SOURCE[0]}")"
 repo_root="$(cd "$(dirname "$script_path")" && pwd)"

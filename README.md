@@ -71,6 +71,7 @@ Low-level helpers:
 ```bash
 ./init
 ./install-arch
+./install-mac
 ```
 
 After the first `./arsetup ...` run, the commands are also linked into `~/.local/bin`, so you can run `arsetup`, `arsync`, and `arpush` directly.
@@ -82,3 +83,4 @@ After the first `./arsetup ...` run, the commands are also linked into `~/.local
 - `zsh/.config/zsh/local.zsh` is ignored so host-specific values stay out of git.
 - `nvim` remains its own git repo through the existing submodule, but `arpush` handles its commit and push before updating the main repo.
 - `install-arch` covers packages from the official Arch repos. Extras outside the default repo set, such as Google Chrome, Slack, or `xautolock`, still need a separate install step.
+- `install-mac` uses Homebrew and currently installs the shared CLI tools plus the Kitty and Sublime Text apps.
