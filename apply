@@ -2,8 +2,13 @@
 
 set -euo pipefail
 
+log() {
+  printf '[apply] %s\n' "$1"
+}
+
 profile="${1:-arch}"
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+backup_root="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
 
 if ! command -v stow >/dev/null 2>&1; then
   printf 'stow is required but not installed\n' >&2
@@ -26,6 +31,35 @@ case "$profile" in
     ;;
 esac
 
+log "profile: $profile"
+log "packages: ${packages[*]}"
+
 for package in "${packages[@]}"; do
+  log "processing package: $package"
+  backed_up=0
+
+  while IFS= read -r source_path; do
+    rel_path="${source_path#${repo_root}/${package}/}"
+    target_path="$HOME/$rel_path"
+
+    if [[ -e "$target_path" && ! -L "$target_path" ]]; then
+      mkdir -p "$backup_root/$(dirname "$rel_path")"
+      mv "$target_path" "$backup_root/$rel_path"
+      log "backed up $target_path -> $backup_root/$rel_path"
+      backed_up=1
+    fi
+  done < <(find "$repo_root/$package" -type f)
+
+  if [[ $backed_up -eq 0 ]]; then
+    log "no backups needed for $package"
+  fi
+
+  log "stowing $package"
   stow --restow --target="$HOME" --dir="$repo_root" "$package"
 done
+
+if [[ -d "$backup_root" ]]; then
+  log "backups stored in $backup_root"
+fi
+
+log "apply complete"

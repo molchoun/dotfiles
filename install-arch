@@ -2,6 +2,10 @@
 
 set -euo pipefail
 
+log() {
+  printf '[install-arch] %s\n' "$1"
+}
+
 if ! command -v pacman >/dev/null 2>&1; then
   printf 'pacman is required for install-arch\n' >&2
   exit 1
@@ -39,10 +43,12 @@ packages=(
   feh
   xorg-xinput
   xorg-xrandr
-  xautolock
   gnome-terminal
   gnome-screenshot
   alsa-utils
 )
 
+log "installing Arch packages"
+log "packages: ${packages[*]}"
 sudo pacman -S --noconfirm --needed "${packages[@]}"
+log "package install complete"

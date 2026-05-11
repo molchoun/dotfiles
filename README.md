@@ -60,4 +60,4 @@ Apply the macOS-friendly subset:
 - Put machine-specific shell overrides in `~/.config/zsh/local.zsh`.
 - `zsh/.config/zsh/local.zsh` is ignored so host-specific values stay out of git.
 - `nvim` remains its own git repo through the existing submodule.
-- `install-arch` covers packages from the official Arch repos. AUR apps such as Google Chrome or Slack still need a separate install step.
+- `install-arch` covers packages from the official Arch repos. Extras outside the default repo set, such as Google Chrome, Slack, or `xautolock`, still need a separate install step.
