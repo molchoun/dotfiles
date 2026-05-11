@@ -1,0 +1,99 @@
+{
+  "layer": "top",
+  "position": "top",
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": [
+    "wireplumber",
+    "bluetooth",
+    "hyprland/language",
+    "network",
+    "cpu",
+    "memory",
+    "temperature",
+    "battery",
+    "tray"
+  ],
+  "hyprland/workspaces": {
+    "format": "{name}: {icon}",
+    "format-icons": {
+      "active": "",
+      "default": ""
+    }
+  },
+  "tray": {
+    "icon-size": 21,
+    "spacing": 5
+  },
+  "clock": {
+    "timezone": "Asia/Yerevan",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "on-click": "kitty -e cal",
+    "format": "{:%a %d - %H:%M}",
+    "today-format": "<span color='#ff6699'><b><u>{}</u></b></span>",
+    "on-scroll": {
+      "calendar": 1
+    }
+  },
+  "bluetooth": {
+    "format": " {status}",
+    "format-off": "󰂲 off",
+    "format-disabled": "󰂲 disabled",
+    "format-on": " on",
+    "format-connected": " {device_alias}",
+    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "on-click": "blueman-manager"
+  },
+  "network": {
+    "format-wifi": "󰤢 ",
+    "format-ethernet": "󰈀 ",
+    "format-disconnected": "󰤠 ",
+    "interval": 5,
+    "tooltip": false
+  },
+  "hyprland/language": {
+    "format": "{shortDescription}",
+    "on-click": "hyprctl switchxkblayout all next"
+  },
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged": "󱘖 {capacity}%",
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+  },
+  "cpu": {
+    "interval": 1,
+    "format": "  {icon0}{icon1}{icon2}{icon3} {usage:>2}%",
+    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
+  },
+  "memory": {
+    "interval": 30,
+    "format": "  {percentage}%"
+  },
+  "temperature": {
+    "format": "{icon} {temperatureC}°C",
+    "format-icons": ["", "", "", "", ""],
+    "critical-threshold": 85
+  },
+  "wireplumber": {
+    "format": "{icon} {volume}%",
+    "format-muted": "",
+    "format-icons": ["", "", ""],
+    "tooltip-format": "{node_name}",
+    "scroll-step": 2,
+    "max-volume": 100,
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click-right": "pavucontrol"
+  },
+  "custom/lock": {
+    "tooltip": false,
+    "on-click": "sh -c '(sleep 0.5s; hyprlock)' & disown",
+    "format": ""
+  }
+}

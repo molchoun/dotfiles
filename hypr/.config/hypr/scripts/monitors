@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+mode="$1"
+
+is_ext() {
+  hyprctl -j monitors all | jq -e '.[] | select(.name=="HDMI-A-1")' >/dev/null 2>&1
+}
+
+case "$mode" in
+  dual)
+    if is_ext; then
+      hyprctl keyword monitor "HDMI-A-1,preferred,1920x0,1.33"
+      hyprctl keyword monitor "eDP-1,preferred,0x0,1"
+      notify-send "Hyprland" "Switched: dual monitors"
+    else
+      hyprctl keyword monitor "HDMI-A-1,disable"
+      hyprctl keyword monitor "eDP-1,preferred,0x0,1"
+      notify-send "Hyprland" "HDMI-A-1 not connected, using integrated only"
+    fi
+    ;;
+  ext)
+    if is_ext; then
+      hyprctl keyword monitor "eDP-1,disable"
+      hyprctl keyword monitor "HDMI-A-1,preferred,0x0,1.33"
+      notify-send "Hyprland" "Switched: external only"
+    else
+      notify-send "Hyprland" "HDMI-A-1 not connected, keeping integrated screen on"
+    fi
+    ;;
+  int)
+    hyprctl keyword monitor "HDMI-A-1,disable"
+    hyprctl keyword monitor "eDP-1,preferred,0x0,1"
+    notify-send "Hyprland" "Switched: integrated only"
+    ;;
+  *)
+    notify-send "Hyprland" "Usage: monitors {dual|ext|int}"
+    exit 1
+    ;;
+esac

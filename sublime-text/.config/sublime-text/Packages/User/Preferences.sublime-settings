@@ -1,0 +1,23 @@
+{
+	"font_size": 18,
+	"bold_folder_labels": true,
+	"highlight_modified_tabs": true,
+
+	"ignored_packages":
+	[
+		"Vintage",
+	],
+	"vintage_start_in_command_mode": true,
+	"word_wrap": true,
+
+	"index_files": true,
+	"neovintageous_build_version": 13200,
+	"vintageous_highlighted_yank": true,
+	"vintageous_highlighted_yank_duration": 140,
+	"vintageous_hlsearch": true,
+	"vintageous_incsearch": true,
+	"vintageous_enable_cmdline_mode": true,
+	"vintageous_autoindent": true,
+	"vintageous_use_sys_clipboard": true,
+	"theme": "auto",
+}

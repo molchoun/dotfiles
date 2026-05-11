@@ -1,0 +1,23 @@
+[
+	{ "keys": ["ctrl+c"], "command": "nv_enter_normal_mode", "args": { "mode": "mode_insert" }, "context": [{ "key": "vi_insert_mode_aware" }] },
+	{ "keys": ["ctrl+t"], "command": "new_file" },
+	{ "keys": ["ctrl+h"], "command": "move", "args": { "by": "characters", "forward": false }, "context": [{ "key": "setting.vintage", "operator": "equal", "operand": false }] },
+	{ "keys": ["ctrl+l"], "command": "move", "args": { "by": "characters", "forward": true }, "context": [{ "key": "setting.vintage", "operator": "equal", "operand": false }] },
+	{ "keys": ["ctrl+j"], "command": "move", "args": { "by": "lines", "forward": true }, "context": [{ "key": "setting.vintage", "operator": "equal", "operand": false }] },
+	{ "keys": ["ctrl+k"], "command": "move", "args": { "by": "lines", "forward": false }, "context": [{ "key": "setting.vintage", "operator": "equal", "operand": false }] },
+	{
+	    "keys": ["ctrl+s"],
+	    "command": "save"
+	},
+	{
+		"keys": ["ctrl+tab"], "command": "next_view"
+	},
+	{
+		"keys": ["ctrl+shift+tab"], "command": "prev_view"
+	},
+	{ "keys": ["z", "a"], "command": "fold" },
+	{
+	    "keys": ["ctrl+shift+w"],
+	    "command": "close"
+	}
+]

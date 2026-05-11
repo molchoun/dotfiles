@@ -1,0 +1,16 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"Compare Side-By-Side",
+		"CopyWithLineNumbersReloaded",
+		"JSON Stringify",
+		"NeoVintageous",
+		"NeoVintageousHighlightLine",
+		"Package Control",
+		"Pretty JSON",
+	],
+}

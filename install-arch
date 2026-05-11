@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if ! command -v pacman >/dev/null 2>&1; then
+  printf 'pacman is required for install-arch\n' >&2
+  exit 1
+fi
+
+packages=(
+  git
+  stow
+  zsh
+  tmux
+  neovim
+  lua51
+  luarocks
+  fzf
+  fd
+  ripgrep
+  ranger
+  jq
+  kitty
+  dolphin
+  rofi
+  waybar
+  hyprland
+  hyprlock
+  hypridle
+  hyprpaper
+  wl-clipboard
+  xdg-desktop-portal-hyprland
+  brightnessctl
+  playerctl
+  pavucontrol
+  network-manager-applet
+  i3-wm
+  picom
+  feh
+  xorg-xinput
+  xorg-xrandr
+  xautolock
+  gnome-terminal
+  gnome-screenshot
+  alsa-utils
+)
+
+sudo pacman -S --noconfirm --needed "${packages[@]}"

@@ -1,0 +1,16 @@
+" A double quote character starts a comment.
+set ignorecase
+set smartcase
+
+let mapleader=" "
+set foldmethod=indent
+
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+nnoremap <C-h> <C-w><C-h>
+nnoremap <C-j> <C-w><C-j>
+nnoremap <C-k> <C-w><C-k>
+nnoremap <C-l> <C-w><C-l>
+nnoremap <C-S-s> :tabclose<CR>
+inoremap <C-c> <Esc>
+vnoremap <C-c> <Esc>

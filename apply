@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+profile="${1:-arch}"
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if ! command -v stow >/dev/null 2>&1; then
+  printf 'stow is required but not installed\n' >&2
+  exit 1
+fi
+
+packages=(zsh tmux nvim scripts ranger)
+
+case "$profile" in
+  shared)
+    ;;
+  arch)
+    packages+=(i3 hypr waybar rofi sublime-text)
+    ;;
+  mac)
+    ;;
+  *)
+    printf 'usage: %s [shared|arch|mac]\n' "$0" >&2
+    exit 1
+    ;;
+esac
+
+for package in "${packages[@]}"; do
+  stow --restow --target="$HOME" --dir="$repo_root" "$package"
+done

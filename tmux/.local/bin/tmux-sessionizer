@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_SPECS=(
+  "$HOME/workspace:2"
+  "$HOME/personal:1"
+)
+
+if [[ -n "${TMUX_SESSIONIZER_ROOTS:-}" ]]; then
+  IFS=':' read -r -a roots <<<"${TMUX_SESSIONIZER_ROOTS}"
+  ROOT_SPECS=()
+  for root in "${roots[@]}"; do
+    ROOT_SPECS+=("${root}:2")
+  done
+fi
+
+list_projects() {
+  for spec in "${ROOT_SPECS[@]}"; do
+    root="${spec%:*}"
+    depth="${spec##*:}"
+    [[ -d "$root" ]] || continue
+    find "$root" -mindepth 1 -maxdepth "$depth" -type d ! -name .git ! -path '*/.git/*'
+  done
+}
+
+pick_project() {
+  list_projects | sort -u | fzf
+}
+
+selected="${1:-}"
+
+if [[ -z "$selected" ]]; then
+  selected="$(pick_project || true)"
+fi
+
+[[ -z "$selected" ]] && exit 0
+[[ -d "$selected" ]] || { echo "Not a directory: $selected"; exit 1; }
+
+session_name="$(basename "$selected" | tr '. ' '__')"
+
+if ! tmux has-session -t="$session_name" 2>/dev/null; then
+  tmux new-session -ds "$session_name" -c "$selected"
+fi
+
+if [[ -n "${TMUX:-}" ]]; then
+  tmux switch-client -t "$session_name"
+else
+  tmux attach-session -t "$session_name"
+fi

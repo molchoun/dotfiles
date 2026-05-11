@@ -1,0 +1,103 @@
+* {
+  font-family: JetBrainsMono Nerd Font;
+  font-size: 20px;
+  min-height: 0;
+  padding-right: 2px;
+  padding-left: 2px;
+  padding-bottom: 0;
+}
+
+#waybar {
+  background: transparent;
+  color: #c6d0f5;
+  margin: 2px;
+}
+
+#workspaces {
+  border-radius: 5px;
+  margin: 5px;
+  background: #101010;
+  margin-left: 1rem;
+}
+
+#workspaces button {
+  color: #babbf1;
+  border-radius: 5px;
+  padding: 0.4rem;
+}
+
+#workspaces button.active {
+  color: #99d1db;
+  border-radius: 5px;
+}
+
+#workspaces button:hover {
+  color: #85c1dc;
+  border-radius: 5px;
+}
+
+#tray,
+#clock,
+#battery,
+#wireplumber,
+#language,
+#bluetooth,
+#network,
+#cpu,
+#memory,
+#temperature,
+#custom-lock {
+  background-color: #101010;
+  padding: 0.7rem 0.7rem;
+  margin: 5px 0;
+}
+
+#network {
+  border-radius: 5px 0 0 5px;
+}
+
+#language {
+  border-radius: 0px 5px 5px 0;
+  margin-right: 0.1rem;
+}
+
+#clock {
+  color: #8caaee;
+  border-radius: 5px;
+  margin-right: 1rem;
+}
+
+#battery,
+#battery.charging {
+  color: #a6d189;
+  border-radius: 0 5px 5px 0;
+}
+
+#battery.warning:not(.charging) {
+  color: #e78284;
+}
+
+#wireplumber {
+  color: #ea999c;
+  border-radius: 5px 0 0 5%;
+  margin-left: 1rem;
+}
+
+#bluetooth {
+  color: #8caaee;
+}
+
+#temperature.critical {
+  color: #f38ba8;
+}
+
+#custom-lock {
+  border-radius: 5px;
+  color: #babbf1;
+}
+
+#tray {
+  margin-right: 1rem;
+  margin-left: 1rem;
+  border-radius: 5px;
+}
