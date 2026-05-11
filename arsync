@@ -7,7 +7,8 @@ log() {
 }
 
 profile="${1:-arch}"
-repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+script_path="$(readlink -f "${BASH_SOURCE[0]}")"
+repo_root="$(cd "$(dirname "$script_path")" && pwd)"
 backup_root="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
 
 if ! command -v stow >/dev/null 2>&1; then

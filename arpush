@@ -4,7 +4,8 @@ set -euo pipefail
 
 main_message="${1:-sync dotfiles updates}"
 nvim_message="$main_message"
-repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+script_path="$(readlink -f "${BASH_SOURCE[0]}")"
+repo_root="$(cd "$(dirname "$script_path")" && pwd)"
 nvim_repo="$repo_root/nvim/.config"
 
 log() {
