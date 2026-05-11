@@ -6,6 +6,33 @@ log() {
   printf '[arsync] %s\n' "$1"
 }
 
+sync_nvim() {
+  local source_dir="$repo_root/nvim/.config"
+  local target_dir="$HOME/.config/nvim"
+  local backup_dir="$backup_root/.config/nvim"
+
+  log 'processing package: nvim'
+
+  mkdir -p "$HOME/.config"
+
+  if [[ -e "$target_dir" && ! -L "$target_dir" ]]; then
+    mkdir -p "$(dirname "$backup_dir")"
+    mv "$target_dir" "$backup_dir"
+    log "backed up $target_dir -> $backup_dir"
+  else
+    log 'no backups needed for nvim'
+  fi
+
+  rm -f "$HOME/.config/init.lua" "$HOME/.config/lazy-lock.json" "$HOME/.config/README.md"
+
+  if [[ -L "$HOME/.config/lua" && "$(readlink -f "$HOME/.config/lua")" == "$source_dir/lua" ]]; then
+    rm -f "$HOME/.config/lua"
+  fi
+
+  log 'linking ~/.config/nvim'
+  ln -sfn "$source_dir" "$target_dir"
+}
+
 profile="${1:-arch}"
 script_path="$(readlink -f "${BASH_SOURCE[0]}")"
 repo_root="$(cd "$(dirname "$script_path")" && pwd)"
@@ -16,7 +43,7 @@ if ! command -v stow >/dev/null 2>&1; then
   exit 1
 fi
 
-packages=(zsh tmux nvim scripts ranger)
+packages=(zsh tmux scripts ranger)
 
 case "$profile" in
   arch)
@@ -32,6 +59,8 @@ esac
 
 log "profile: $profile"
 log "packages: ${packages[*]}"
+
+sync_nvim
 
 for package in "${packages[@]}"; do
   log "processing package: $package"
