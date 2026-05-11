@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+profile="${1:-arch}"
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+log() {
+  printf '[arsetup] %s\n' "$1"
+}
+
+install_command_links() {
+  mkdir -p "$HOME/.local/bin"
+  ln -sfn "$repo_root/arsetup" "$HOME/.local/bin/arsetup"
+  ln -sfn "$repo_root/arsync" "$HOME/.local/bin/arsync"
+  ln -sfn "$repo_root/arpush" "$HOME/.local/bin/arpush"
+  log 'installed command links into ~/.local/bin'
+}
+
+case "$profile" in
+  arch)
+    install_command_links
+    log 'initializing submodules'
+    "$repo_root/init"
+    log 'installing Arch packages'
+    "$repo_root/install-arch"
+    log 'syncing Arch configs'
+    "$repo_root/arsync" arch
+    ;;
+  mac)
+    install_command_links
+    log 'initializing submodules'
+    "$repo_root/init"
+    log 'no install-mac command yet, skipping package install'
+    log 'syncing mac configs'
+    "$repo_root/arsync" mac
+    ;;
+  *)
+    printf 'usage: %s [arch|mac]\n' "$0" >&2
+    exit 1
+    ;;
+esac
+
+log 'setup complete'

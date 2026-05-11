@@ -30,34 +30,55 @@ Editing the linked file updates the repo file too, so the repo stays the source 
 
 ## Commands
 
-Initialize submodules:
+New Arch machine:
+
+```bash
+./arsetup arch
+```
+
+New macOS machine:
+
+```bash
+./arsetup mac
+```
+
+Re-sync configs onto an existing Arch machine:
+
+```bash
+./arsync arch
+```
+
+Re-sync configs onto an existing macOS machine:
+
+```bash
+./arsync mac
+```
+
+Commit and push all current config changes, including the `nvim` submodule:
+
+```bash
+./arpush
+```
+
+Use a custom commit message if needed:
+
+```bash
+./arpush "update shell and editor config"
+```
+
+Low-level helpers:
 
 ```bash
 ./init
-```
-
-Apply shared packages only:
-
-```bash
-./apply shared
-```
-
-Apply the Arch setup:
-
-```bash
 ./install-arch
-./apply arch
 ```
 
-Apply the macOS-friendly subset:
-
-```bash
-./apply mac
-```
+After the first `./arsetup ...` run, the commands are also linked into `~/.local/bin`, so you can run `arsetup`, `arsync`, and `arpush` directly.
+- `arpush` uses an automatic commit message if you do not pass one.
 
 ## Notes
 
 - Put machine-specific shell overrides in `~/.config/zsh/local.zsh`.
 - `zsh/.config/zsh/local.zsh` is ignored so host-specific values stay out of git.
-- `nvim` remains its own git repo through the existing submodule.
+- `nvim` remains its own git repo through the existing submodule, but `arpush` handles its commit and push before updating the main repo.
 - `install-arch` covers packages from the official Arch repos. Extras outside the default repo set, such as Google Chrome, Slack, or `xautolock`, still need a separate install step.

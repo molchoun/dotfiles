@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+main_message="${1:-sync dotfiles updates}"
+nvim_message="$main_message"
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+nvim_repo="$repo_root/nvim/.config"
+
+log() {
+  printf '[arpush] %s\n' "$1"
+}
+
+repo_dirty() {
+  local repo="$1"
+  [[ -n "$(git -C "$repo" status --short)" ]]
+}
+
+commit_with_repo_author() {
+  local repo="$1"
+  local message="$2"
+
+  if git -C "$repo" var GIT_AUTHOR_IDENT >/dev/null 2>&1; then
+    git -C "$repo" commit -m "$message"
+    return
+  fi
+
+  local author_name author_email
+  author_name="$(git -C "$repo" log -1 --format='%an')"
+  author_email="$(git -C "$repo" log -1 --format='%ae')"
+
+  GIT_AUTHOR_NAME="$author_name" \
+  GIT_AUTHOR_EMAIL="$author_email" \
+  GIT_COMMITTER_NAME="$author_name" \
+  GIT_COMMITTER_EMAIL="$author_email" \
+  git -C "$repo" commit -m "$message"
+}
+
+if repo_dirty "$nvim_repo"; then
+  log 'committing nvim changes'
+  git -C "$nvim_repo" add -A
+  commit_with_repo_author "$nvim_repo" "$nvim_message"
+  log 'pushing nvim submodule'
+  git -C "$nvim_repo" push
+else
+  log 'no nvim changes to push'
+fi
+
+if repo_dirty "$repo_root"; then
+  log 'committing main repo changes'
+  git -C "$repo_root" add -A
+  commit_with_repo_author "$repo_root" "$main_message"
+  log 'pushing main repo'
+  git -C "$repo_root" push
+else
+  log 'no main repo changes to push'
+fi
+
+log 'push complete'
